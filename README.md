@@ -44,7 +44,7 @@ Before setting up the environment, ensure you have the following installed:
 
 1. **Navigate to the React App Directory**:
    ```bash
-   cd web-app
+   cd frontend
    ```
 
 2. **Install Dependencies**:
@@ -65,7 +65,7 @@ Before setting up the environment, ensure you have the following installed:
 
 1. **Navigate to the Rails API Directory**:
    ```bash
-   cd api
+   cd backend
    ```
 
 2. **Install Dependencies**:
