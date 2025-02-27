@@ -104,6 +104,31 @@ Before setting up the environment, ensure you have the following installed:
 
 3. **Access the Game**:
    - Open your web browser and navigate to `http://localhost:3000` to play the game.
+  
+## Database Architecture
+
+![Database Schema](https://github.com/user-attachments/assets/3ebe0536-2d6a-454a-b02f-3a804e81ab3b)
+
+### Relational Model Explained
+
+The relational model is designed to manage a system of users, missions, levels, and rewards within a gamified platform. Below is an explanation of the key entities and their relationships:
+
+- **User**: Represents the system's users. They can participate in missions and earn rewards.
+- **Leaderboard**: Stores user scores.
+- **UserLeaderboard**: Intermediate relationship between `User` and `Leaderboard`, allowing multiple records per user.
+- **Lobby**: Represents a space where players can interact.
+- **LobbyLevel**: Intermediate relationship between `Lobby` and `Level`, allowing a lobby to have multiple levels.
+- **Mission**: Defines missions with instructions and objectives assigned to users.
+- **Level**: Represents the different levels in the system.
+- **MissionLevel**: Relationship between missions and levels, allowing a mission to have multiple associated levels.
+- **Reward**: Represents the rewards users can earn.
+- **LevelReward**: Relationship between levels and rewards.
+- **Item**: Represents objects within the system that can be used in missions.
+- **Inventory**: Stores items acquired by users.
+- **RewardUser**: Relationship between `Reward` and `User`, allowing a user to receive multiple rewards.
+
+This relational model enables a scalable and efficient structure, ensuring data integrity and the potential for future growth.
+
 
 ## Contributing
 
