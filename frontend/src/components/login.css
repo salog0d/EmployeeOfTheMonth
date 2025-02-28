@@ -1,0 +1,32 @@
+/* Estilo para el fondo de pantalla completa */
+.full-screen-bg {
+  background-image: url('./images/almacen.png'); /* Asegúrate de que esta ruta sea correcta */
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white; /* Asegura que el texto sea legible sobre el fondo */
+}
+
+/* Estilo para las tarjetas */
+.card {
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro con transparencia */
+}
+
+/* Estilo para las tablas */
+.table {
+  color: white; /* Texto blanco en las tablas */
+}
+
+.table th,
+.table td {
+  background-color: rgba(0, 123, 255, 0.5); /* Fondo azul con transparencia */
+  border-color: rgba(0, 123, 255, 0.7); /* Borde azul */
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 123, 255, 0.3); /* Fondo azul alternado */
+}
