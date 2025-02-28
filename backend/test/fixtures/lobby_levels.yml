@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  lobby: one
+  level: one
+
+two:
+  lobby: two
+  level: two
