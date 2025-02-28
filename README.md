@@ -140,10 +140,6 @@ We welcome contributions from the community! If you'd like to contribute, please
 4. Push your branch to your fork.
 5. Submit a pull request to the main repository.
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
 ---
 
 Thank you for your interest in **Employee of the Month**! We hope you enjoy the game and find the setup process straightforward. If you encounter any issues or have questions, please don't hesitate to reach out. Happy gaming!
