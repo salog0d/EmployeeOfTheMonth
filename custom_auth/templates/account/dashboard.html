@@ -1,0 +1,44 @@
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <span>Panel de control</span>
+          <a href="{% url 'logout' %}" class="btn btn-sm btn-outline-danger">Cerrar sesión</a>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Bienvenido, {{ user.username }}!</h5>
+          <p class="card-text">Email: {{ user.email }}</p>
+          
+          <!-- Aquí puedes añadir el contenido específico de tu panel de control -->
+          <div class="mt-4">
+            <h6>Tus estadísticas</h6>
+            <!-- Ejemplo de contenido del dashboard -->
+            <div class="row mt-3">
+              <div class="col-md-4">
+                <div class="card text-center p-3">
+                  <h3>0</h3>
+                  <p class="text-muted">Misiones completadas</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card text-center p-3">
+                  <h3>0</h3>
+                  <p class="text-muted">Recompensas</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card text-center p-3">
+                  <h3>0</h3>
+                  <p class="text-muted">Nivel actual</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
