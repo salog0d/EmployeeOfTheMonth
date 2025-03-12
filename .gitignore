@@ -9,7 +9,7 @@ db.sqlite3-journal
 media
 
 # Si quieres ignorar settings.py completamente
-settings.py
+EmployeeOfTHeMonth/settings.py
 # O alternativamente, una mejor práctica es tener diferentes settings:
 # */settings/local.py
 # */settings/production.py
