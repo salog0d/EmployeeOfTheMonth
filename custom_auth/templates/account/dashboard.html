@@ -1,40 +1,33 @@
+{% extends 'base.html' %}
+
 {% block content %}
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-          <span>Panel de control</span>
-          <a href="{% url 'logout' %}" class="btn btn-sm btn-outline-danger">Cerrar sesión</a>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Bienvenido, {{ user.username }}!</h5>
-          <p class="card-text">Email: {{ user.email }}</p>
-          
-          <!-- Aquí puedes añadir el contenido específico de tu panel de control -->
-          <div class="mt-4">
-            <h6>Tus estadísticas</h6>
-            <!-- Ejemplo de contenido del dashboard -->
-            <div class="row mt-3">
-              <div class="col-md-4">
-                <div class="card text-center p-3">
-                  <h3>0</h3>
-                  <p class="text-muted">Misiones completadas</p>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="card text-center p-3">
-                  <h3>0</h3>
-                  <p class="text-muted">Recompensas</p>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="card text-center p-3">
-                  <h3>0</h3>
-                  <p class="text-muted">Nivel actual</p>
-                </div>
-              </div>
-            </div>
+<div class="max-w-4xl mx-auto mt-10">
+  <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <div class="bg-gray-100 px-4 py-3 border-b border-gray-200 flex justify-between items-center">
+      <span class="font-medium">Panel de control</span>
+      <a href="{% url 'logout' %}" class="px-3 py-1 text-sm text-red-600 border border-red-600 rounded hover:bg-red-50 transition-colors">Cerrar sesión</a>
+    </div>
+    <div class="p-6">
+      <h2 class="text-xl font-semibold text-gray-800">Bienvenido, {{ user.username }}!</h2>
+      <p class="text-gray-600 mt-2">Email: {{ user.email }}</p>
+      
+      <!-- Contenido específico del panel de control -->
+      <div class="mt-8">
+        <h3 class="text-lg font-medium text-gray-800">Tus estadísticas</h3>
+        
+        <!-- Estadísticas en grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+          <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-6 text-center">
+            <h3 class="text-3xl font-bold text-gray-800">0</h3>
+            <p class="text-gray-500 mt-2">Misiones completadas</p>
+          </div>
+          <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-6 text-center">
+            <h3 class="text-3xl font-bold text-gray-800">0</h3>
+            <p class="text-gray-500 mt-2">Recompensas</p>
+          </div>
+          <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-6 text-center">
+            <h3 class="text-3xl font-bold text-gray-800">0</h3>
+            <p class="text-gray-500 mt-2">Nivel actual</p>
           </div>
         </div>
       </div>
