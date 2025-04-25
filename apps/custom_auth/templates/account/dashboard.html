@@ -1,37 +1,299 @@
 {% extends 'base.html' %}
 
+{% block title %}Dashboard - EmployeeOfTheMonth{% endblock %}
+
+{% block extra_head %}
+<style>
+    .stat-card {
+        transition: all 0.3s ease;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .leaderboard-item {
+        transition: all 0.2s ease;
+    }
+    
+    .leaderboard-item:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    .user-rank {
+        background: linear-gradient(to right, #ef4444, #991b1b);
+        color: white;
+        padding: 0.2rem 0.5rem;
+        border-radius: 9999px;
+        font-weight: bold;
+        min-width: 2.5rem;
+        text-align: center;
+    }
+    
+    .leaderboard-card {
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .top-player {
+        position: relative;
+    }
+    
+    .top-player::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        box-shadow: inset 0 -2px 0 rgba(239, 68, 68, 0.7);
+        border-radius: 0.5rem;
+        pointer-events: none;
+    }
+    
+    .rank-badge {
+        font-size: 0.75rem;
+        width: 1.5rem;
+        height: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+    
+    .top-3-badge {
+        width: 2rem;
+        height: 2rem;
+        font-size: 0.875rem;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="max-w-4xl mx-auto mt-10">
-  <div class="bg-white rounded-lg shadow-md overflow-hidden">
-    <div class="bg-gray-100 px-4 py-3 border-b border-gray-200 flex justify-between items-center">
-      <span class="font-medium">Panel de control</span>
-      <a href="{% url 'logout' %}" class="px-3 py-1 text-sm text-red-600 border border-red-600 rounded hover:bg-red-50 transition-colors">Cerrar sesión</a>
-    </div>
-    <div class="p-6">
-      <h2 class="text-xl font-semibold text-gray-800">Bienvenido, {{ user.username }}!</h2>
-      <p class="text-gray-600 mt-2">Email: {{ user.email }}</p>
-      
-      <!-- Contenido específico del panel de control -->
-      <div class="mt-8">
-        <h3 class="text-lg font-medium text-gray-800">Tus estadísticas</h3>
-        
-        <!-- Estadísticas en grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
-          <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-6 text-center">
-            <h3 class="text-3xl font-bold text-gray-800">0</h3>
-            <p class="text-gray-500 mt-2">Misiones completadas</p>
-          </div>
-          <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-6 text-center">
-            <h3 class="text-3xl font-bold text-gray-800">0</h3>
-            <p class="text-gray-500 mt-2">Recompensas</p>
-          </div>
-          <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-6 text-center">
-            <h3 class="text-3xl font-bold text-gray-800">0</h3>
-            <p class="text-gray-500 mt-2">Nivel actual</p>
-          </div>
+<div class="max-w-7xl mx-auto mt-8">
+    <!-- Panel de control principal -->
+    <div class="glass-panel rounded-xl overflow-hidden shadow-lg border border-white/5">
+        <div class="bg-black/50 px-6 py-4 border-b border-gray-800 flex justify-between items-center">
+            <span class="font-medium text-white text-lg font-gaming">PANEL DE CONTROL</span>
+            <a href="{% url 'logout' %}" class="px-4 py-2 text-sm text-white bg-game-red-600 hover:bg-game-red-700 rounded-md transition-colors duration-200 font-medium flex items-center space-x-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                Cerrar sesión
+            </a>
         </div>
-      </div>
+        
+        <div class="p-6">
+            <!-- Información del usuario -->
+            <div class="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-6">
+                <div class="h-20 w-20 rounded-full bg-gradient-to-br from-game-red-600 to-game-red-800 flex items-center justify-center text-3xl font-bold text-white">
+                    {{ user.username|first|upper }}
+                </div>
+                <div>
+                    <h2 class="text-2xl font-semibold text-white">¡Bienvenido, <span class="text-game-red-500">{{ user.username }}</span>!</h2>
+                    <p class="text-gray-300 mt-2">Email: {{ user.email }}</p>
+                    <div class="mt-1 flex items-center space-x-4">
+                        <span class="text-gray-400 text-sm">Nivel: <span class="text-white font-medium">5</span></span>
+                        <span class="text-gray-400 text-sm">Rango: <span class="text-white font-medium">#42</span></span>
+                        <span class="text-gray-400 text-sm">Última actividad: <span class="text-white font-medium">Hace 2 días</span></span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Barra de progreso -->
+            <div class="mt-6">
+                <div class="flex justify-between text-sm mb-1">
+                    <span class="text-gray-300">Nivel 5</span>
+                    <span class="text-gray-300">1250 / 2000 XP</span>
+                </div>
+                <div class="h-2 w-full bg-gray-700 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-game-red-600 to-red-400 rounded-full" style="width: 62.5%"></div>
+                </div>
+            </div>
+            
+            <!-- Estadísticas en grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                <div class="glass-panel stat-card rounded-xl p-6 text-center border border-white/5">
+                    <div class="flex items-center justify-center mb-2">
+                        <div class="bg-red-500/20 p-2 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-3xl font-bold text-white">28</h3>
+                    <p class="text-gray-400 mt-2">Misiones completadas</p>
+                </div>
+                
+                <div class="glass-panel stat-card rounded-xl p-6 text-center border border-white/5">
+                    <div class="flex items-center justify-center mb-2">
+                        <div class="bg-yellow-500/20 p-2 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-3xl font-bold text-white">1250</h3>
+                    <p class="text-gray-400 mt-2">Puntos acumulados</p>
+                </div>
+                
+                <div class="glass-panel stat-card rounded-xl p-6 text-center border border-white/5">
+                    <div class="flex items-center justify-center mb-2">
+                        <div class="bg-green-500/20 p-2 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="text-3xl font-bold text-white">7</h3>
+                    <p class="text-gray-400 mt-2">Logros desbloqueados</p>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+    
+    <!-- Leaderboard -->
+    <div class="mt-8">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold text-white font-gaming">TABLA DE CLASIFICACIÓN</h3>
+            <a href="#" class="text-game-red-400 hover:text-game-red-300 text-sm flex items-center">
+                Ver clasificación completa
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </a>
+        </div>
+        
+        <div class="glass-panel rounded-xl overflow-hidden border border-white/5 leaderboard-card">
+            <!-- Cabecera de la tabla -->
+            <div class="bg-black/50 border-b border-gray-800 px-6 py-3 grid grid-cols-12 gap-4">
+                <div class="col-span-1 text-gray-400 text-sm font-medium">#</div>
+                <div class="col-span-4 text-gray-400 text-sm font-medium">Jugador</div>
+                <div class="col-span-2 text-gray-400 text-sm font-medium text-center">Nivel</div>
+                <div class="col-span-3 text-gray-400 text-sm font-medium text-center">Puntos</div>
+                <div class="col-span-2 text-gray-400 text-sm font-medium text-center">Misiones</div>
+            </div>
+            
+            <!-- Filas de jugadores -->
+            <div class="divide-y divide-gray-800">
+                <!-- Top 1 -->
+                <div class="px-6 py-4 grid grid-cols-12 gap-4 items-center top-player leaderboard-item bg-white/5">
+                    <div class="col-span-1">
+                        <div class="rank-badge top-3-badge bg-yellow-500 text-black">1</div>
+                    </div>
+                    <div class="col-span-4 flex items-center space-x-3">
+                        <div class="h-10 w-10 rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center text-sm font-bold text-white">
+                            M
+                        </div>
+                        <span class="font-medium text-white">MasterGamer</span>
+                    </div>
+                    <div class="col-span-2 text-center">
+                        <span class="bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded-full text-xs font-medium">Nivel 32</span>
+                    </div>
+                    <div class="col-span-3 text-center">
+                        <span class="text-white font-bold">8,745</span>
+                    </div>
+                    <div class="col-span-2 text-center">
+                        <span class="text-gray-300">124</span>
+                    </div>
+                </div>
+                
+                <!-- Top 2 -->
+                <div class="px-6 py-4 grid grid-cols-12 gap-4 items-center top-player leaderboard-item">
+                    <div class="col-span-1">
+                        <div class="rank-badge top-3-badge bg-gray-300 text-gray-800">2</div>
+                    </div>
+                    <div class="col-span-4 flex items-center space-x-3">
+                        <div class="h-10 w-10 rounded-full bg-gradient-to-br from-gray-300 to-gray-500 flex items-center justify-center text-sm font-bold text-white">
+                            S
+                        </div>
+                        <span class="font-medium text-white">ShadowKiller</span>
+                    </div>
+                    <div class="col-span-2 text-center">
+                        <span class="bg-gray-500/20 text-gray-300 px-2 py-1 rounded-full text-xs font-medium">Nivel 29</span>
+                    </div>
+                    <div class="col-span-3 text-center">
+                        <span class="text-white font-bold">7,920</span>
+                    </div>
+                    <div class="col-span-2 text-center">
+                        <span class="text-gray-300">107</span>
+                    </div>
+                </div>
+                
+                <!-- Top 3 -->
+                <div class="px-6 py-4 grid grid-cols-12 gap-4 items-center top-player leaderboard-item">
+                    <div class="col-span-1">
+                        <div class="rank-badge top-3-badge bg-amber-700 text-white">3</div>
+                    </div>
+                    <div class="col-span-4 flex items-center space-x-3">
+                        <div class="h-10 w-10 rounded-full bg-gradient-to-br from-amber-600 to-amber-800 flex items-center justify-center text-sm font-bold text-white">
+                            N
+                        </div>
+                        <span class="font-medium text-white">NinjaStrike</span>
+                    </div>
+                    <div class="col-span-2 text-center">
+                        <span class="bg-amber-500/20 text-amber-300 px-2 py-1 rounded-full text-xs font-medium">Nivel 27</span>
+                    </div>
+                    <div class="col-span-3 text-center">
+                        <span class="text-white font-bold">6,834</span>
+                    </div>
+                    <div class="col-span-2 text-center">
+                        <span class="text-gray-300">93</span>
+                    </div>
+                </div>
+                
+                <!-- Jugadores del 4 al 15 -->
+                {% for i in "45678901234"|make_list %}
+                    <div class="px-6 py-3 grid grid-cols-12 gap-4 items-center leaderboard-item">
+                        <div class="col-span-1">
+                            <div class="rank-badge bg-gray-700 text-gray-300">{{ forloop.counter|add:3 }}</div>
+                        </div>
+                        <div class="col-span-4 flex items-center space-x-3">
+                            <div class="h-8 w-8 rounded-full bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center text-xs font-medium text-white">
+                                {{ forloop.counter }}
+                            </div>
+                            <span class="font-medium text-gray-300">Jugador{{ forloop.counter|add:3 }}</span>
+                        </div>
+                        <div class="col-span-2 text-center">
+                            <span class="bg-gray-700/40 text-gray-300 px-2 py-1 rounded-full text-xs">Nivel {{ forloop.counter|add:19 }}</span>
+                        </div>
+                        <div class="col-span-3 text-center">
+                            <span class="text-gray-300 font-medium">{{ forloop.counter|add:3 }}{{ forloop.counter|add:7 }}{{ forloop.counter|add:5 }}0</span>
+                        </div>
+                        <div class="col-span-2 text-center">
+                            <span class="text-gray-400">{{ forloop.counter|add:60 }}</span>
+                        </div>
+                    </div>
+                {% endfor %}
+                
+                <!-- Tu posición (destacada) -->
+                <div class="px-6 py-4 grid grid-cols-12 gap-4 items-center leaderboard-item bg-game-red-900/20 border-l-4 border-game-red-600">
+                    <div class="col-span-1">
+                        <div class="rank-badge bg-game-red-600 text-white">42</div>
+                    </div>
+                    <div class="col-span-4 flex items-center space-x-3">
+                        <div class="h-10 w-10 rounded-full bg-gradient-to-br from-game-red-600 to-game-red-800 flex items-center justify-center text-sm font-bold text-white">
+                            {{ user.username|first|upper }}
+                        </div>
+                        <span class="font-medium text-white">{{ user.username }}</span>
+                        <span class="bg-game-red-600/20 text-game-red-300 px-2 py-0.5 rounded text-xs font-medium">Tú</span>
+                    </div>
+                    <div class="col-span-2 text-center">
+                        <span class="bg-game-red-500/20 text-game-red-300 px-2 py-1 rounded-full text-xs font-medium">Nivel 5</span>
+                    </div>
+                    <div class="col-span-3 text-center">
+                        <span class="text-white font-bold">1,250</span>
+                    </div>
+                    <div class="col-span-2 text-center">
+                        <span class="text-gray-300">28</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

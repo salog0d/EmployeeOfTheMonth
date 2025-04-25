@@ -1,53 +1,191 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Of The Month</title>
+    <title>{% block title %}Employee Of The Month{% endblock %}</title>
     
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Optional: Add your custom Tailwind configuration -->
+    <!-- Configuración personalizada de Tailwind -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        // Add your custom colors here
+                        'game-red': {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            200: '#fecaca',
+                            300: '#fca5a5',
+                            400: '#f87171',
+                            500: '#ef4444',
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                            900: '#7f1d1d',
+                        },
+                    },
+                    fontFamily: {
+                        gaming: ['Orbitron', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'red-glow': '0 0 15px rgba(239, 68, 68, 0.5)',
                     }
                 }
             }
         }
     </script>
     
-    <!-- Optional: Add your custom CSS -->
-    <style type="text/tailwindcss">
-        @layer components {
-            /* Add your custom components here */
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS personalizado -->
+    <style>
+        body {
+            background: radial-gradient(circle at top right, #991b1b, #1a1a1a);
+            background-attachment: fixed;
+        }
+        
+        .glass-panel {
+            background-color: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .button-hover:hover {
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+            transform: translateY(-1px);
+            transition: all 0.2s ease;
+        }
+        
+        .red-gradient {
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #ef4444;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-item:hover::after {
+            width: 100%;
+        }
+        
+        .active-nav::after {
+            width: 100%;
         }
     </style>
     
     {% block extra_head %}{% endblock %}
 </head>
-<body class="bg-gray-100 min-h-screen">
-    <header class="bg-white shadow">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold text-gray-900">Employee Of The Month</h1>
+<body class="min-h-screen flex flex-col">
+    <header class="bg-black/80 border-b border-gray-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-3">
+                    <!-- Logo -->
+                    <div class="h-10 w-10 bg-gradient-to-br from-game-red-600 to-game-red-800 rounded-lg flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 11h4a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2z"></path>
+                            <path d="M14 11h4a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2z"></path>
+                            <path d="M6 22h4a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2z"></path>
+                            <path d="M14 22h4a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2z"></path>
+                        </svg>
+                    </div>
+                    <h1 class="text-xl md:text-2xl font-bold text-white font-gaming tracking-wider">EmployeeOf<span class="text-game-red-500">TheMonth</span></h1>
+                </div>
+                
+          
+                    
+                    
+                    <!-- Botón de menú móvil -->
+                    <button id="mobileMenuButton" class="md:hidden text-gray-300 focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Menú móvil (oculto por defecto) -->
+            
+            </div>
         </div>
     </header>
     
-    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div class="px-4 py-6 sm:px-0">
+    <main class="flex-grow">
+        <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
             {% block content %}{% endblock %}
         </div>
     </main>
     
-    <footer class="bg-white shadow mt-auto">
-        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-            <p class="text-center text-gray-500 text-sm">© {% now "Y" %} Employee Of The Month. All rights reserved.</p>
+    <footer class="bg-black/80 border-t border-gray-800 mt-auto">
+        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <div class="flex items-center space-x-2">
+                    <div class="h-8 w-8 bg-gradient-to-br from-game-red-600 to-game-red-800 rounded flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 11h4a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2z"></path>
+                            <path d="M14 11h4a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2z"></path>
+                            <path d="M6 22h4a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2z"></path>
+                            <path d="M14 22h4a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-lg font-bold text-white font-gaming tracking-wider">EmployeeOf<span class="text-game-red-500">TheMonth</span></span>
+                </div>
+                
+              
+                
+                <div class="text-gray-500 text-sm">
+                    © {% now "Y" %} EmployeeOfTheMonth. Todos los derechos reservados.
+                </div>
+            </div>
         </div>
     </footer>
+    
+    <script>
+        // Script para el menú desplegable del usuario
+        const userMenuButton = document.getElementById('userMenuButton');
+        const userMenu = document.getElementById('userMenu');
+        
+        if (userMenuButton && userMenu) {
+            userMenuButton.addEventListener('click', () => {
+                userMenu.classList.toggle('hidden');
+            });
+            
+            // Cerrar al hacer clic fuera
+            document.addEventListener('click', (event) => {
+                if (!userMenuButton.contains(event.target) && !userMenu.contains(event.target)) {
+                    userMenu.classList.add('hidden');
+                }
+            });
+        }
+        
+        // Script para el menú móvil
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    </script>
     
     {% block extra_body %}{% endblock %}
 </body>
