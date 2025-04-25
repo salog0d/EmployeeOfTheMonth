@@ -9,6 +9,8 @@ from django.contrib.sites.shortcuts import get_current_site
 import uuid
 from .models import CustomUser
 from .forms import CustomUserCreationForm, CustomAuthenticationForm
+from django.utils.html import strip_tags
+from django.core.mail import EmailMultiAlternatives
 
 def signup_view(request):
     if request.method == 'POST':
@@ -19,15 +21,35 @@ def signup_view(request):
             user.verification_token = uuid.uuid4()
             user.save()
             
-            # Enviar correo de verificación
+            # Enviar correo de verificación con soporte HTML
             current_site = get_current_site(request)
-            mail_subject = 'Confirma tu cuenta'
-            message = render_to_string('account/verification_email.html', {
+            mail_subject = 'Confirma tu cuenta en GameZone'
+            
+            # Contexto para el template
+            context = {
                 'user': user,
                 'domain': current_site.domain,
                 'token': user.verification_token,
-            })
-            send_mail(mail_subject, message, 'noreply@tudominio.com', [user.email])
+                'site_name': 'GameZone',
+            }
+            
+            # Renderizar el template HTML
+            html_message = render_to_string('account/verification_email.html', context)
+            # Versión de texto plano para clientes que no soportan HTML
+            plain_message = strip_tags(html_message)
+            
+            # Crear el mensaje con ambas versiones
+            
+            email = EmailMultiAlternatives(
+                subject=mail_subject,
+                body=plain_message,
+                from_email='EmployeeOfTheMonth <noreply@tudominio.com>',
+                to=[user.email]
+            )
+            
+            # Adjuntar la versión HTML
+            email.attach_alternative(html_message, "text/html")
+            email.send()
             
             messages.success(request, 'Por favor, confirma tu correo electrónico para completar el registro.')
             return redirect('login')
