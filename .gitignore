@@ -3,7 +3,7 @@
 *.pot
 *.pyc
 __pycache__/
-EmployeeOfTHeMonth/settings.py
+EmployeeOfTheMonth/settings.py
 db.sqlite3
 db.sqlite3-journal
 media
