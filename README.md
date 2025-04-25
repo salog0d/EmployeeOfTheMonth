@@ -436,9 +436,3 @@ Agradecemos las contribuciones a Employee Of The Month. Por favor sigue estos pa
 ## Licencia
 
 Este proyecto está licenciado bajo la Licencia 
-
-## Contacto
-
-Desarrollador - [tu-email@example.com](mailto:tu-email@example.com)
-
-Enlace del proyecto: [https://github.com/yourusername/EmployeeOfTheMonth](https://github.com/yourusername/EmployeeOfTheMonth)
