@@ -435,4 +435,4 @@ Agradecemos las contribuciones a Employee Of The Month. Por favor sigue estos pa
 
 ## Licencia
 
-Este proyecto está licenciado bajo la Licencia 
+Este proyecto está licenciado bajo la Licencia GNU GENERAL PUBLIC LICENSE
