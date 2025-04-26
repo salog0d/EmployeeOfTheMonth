@@ -4,6 +4,18 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from .models import CustomUser
+from django.contrib.auth.decorators import login_required
+
+
+@login_required
+def game_view(request):
+    user = request.user
+    context = {
+        'user_id': user.id,
+        'username': user.username,
+        # No incluyas información sensible como tokens JWT aquí
+    }
+    return render(request, 'game.html', context)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}EmployeeOfTheMonth - Game{% endblock %}
+
+{% block extra_head %}
+<style>
+  .game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+  }
+  
+  #unity-container {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  #unity-canvas {
+    width: 100%;
+    height: 600px;
+    background: #231F20;
+  }
+  
+  /* Estilos para asegurar que el canvas llene el espacio disponible */
+  @media screen and (max-width: 960px) {
+    #unity-canvas {
+      height: 540px;
+    }
+  }
+  
+  #unity-loading-bar {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+  }
+  
+  #unity-footer {
+    margin-top: 10px;
+    height: 38px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto glass-panel rounded-xl overflow-hidden shadow-lg border border-white/5">
+    <div class="bg-black/50 px-6 py-4 border-b border-gray-800 flex justify-between items-center">
+        <span class="font-medium text-white text-lg font-gaming">GAME MODE</span>
+        <a href="{% url 'dashboard' %}" class="px-4 py-2 text-sm text-white bg-game-red-600 hover:bg-game-red-700 rounded-md transition-colors duration-200 font-medium">
+            Volver al Dashboard
+        </a>
+    </div>
+    
+    <div class="game-container">
+        <div id="unity-container" class="unity-desktop" data-user-id="{{ user.id }}">
+            <canvas id="unity-canvas" tabindex="-1"></canvas>
+            <div id="unity-loading-bar">
+                <div id="unity-logo"></div>
+                <div id="unity-progress-bar-empty">
+                    <div id="unity-progress-bar-full"></div>
+                </div>
+            </div>
+            <div id="unity-warning"></div>
+            <div id="unity-footer">
+                <div id="unity-webgl-logo"></div>
+                <div id="unity-fullscreen-button"></div>
+                <div id="unity-build-title">EmployeeOfTheMonth</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_body %}
+<script>
+    var container = document.querySelector("#unity-container");
+    var canvas = document.querySelector("#unity-canvas");
+    var loadingBar = document.querySelector("#unity-loading-bar");
+    var progressBarFull = document.querySelector("#unity-progress-bar-full");
+    var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+    var warningBanner = document.querySelector("#unity-warning");
+
+    function unityShowBanner(msg, type) {
+        function updateBannerVisibility() {
+            warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+        }
+        var div = document.createElement('div');
+        div.innerHTML = msg;
+        warningBanner.appendChild(div);
+        if (type == 'error') div.style = 'background: red; padding: 10px;';
+        else {
+            if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+            setTimeout(function() {
+                warningBanner.removeChild(div);
+                updateBannerVisibility();
+            }, 5000);
+        }
+        updateBannerVisibility();
+    }
+
+    // Ajustar las rutas correctamente
+    var buildUrl = "{% static 'game/Build' %}";
+    var loaderUrl = buildUrl + "/Game_Test.loader.js";
+    var config = {
+        dataUrl: buildUrl + "/Game_Test.data",
+        frameworkUrl: buildUrl + "/Game_Test.framework.js",
+        codeUrl: buildUrl + "/Game_Test.wasm",
+        streamingAssetsUrl: "{% static 'game/StreamingAssets' %}",
+        companyName: "DefaultCompany",
+        productName: "EmployeeOfTheMonth",
+        productVersion: "1.0",
+        showBanner: unityShowBanner,
+    };
+
+    // Ajustes responsivos
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
+        container.className = "unity-mobile";
+        canvas.className = "unity-mobile";
+    } else {
+        // Asegurarnos que el canvas se ajuste bien en escritorio
+        canvas.style.width = "100%";
+        canvas.style.height = "600px";
+    }
+
+    loadingBar.style.display = "block";
+
+var script = document.createElement("script");
+script.src = loaderUrl;
+script.onload = () => {
+    createUnityInstance(canvas, config, (progress) => {
+        progressBarFull.style.width = 100 * progress + "%";
+    }).then((unityInstance) => {
+        loadingBar.style.display = "none";
+        fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+        };
+        
+        // Pasar el ID del usuario al juego de forma segura
+        var userId = container.getAttribute('data-user-id');
+        if (userId) {
+            unityInstance.SendMessage('GameController', 'SetUserId', userId);
+            console.log("ID de usuario enviado al juego: " + userId);
+        } else {
+            console.warn("No se pudo obtener el ID de usuario");
+        }
+        
+        console.log("Juego cargado exitosamente");
+    }).catch((message) => {
+        console.error("Error al cargar el juego:", message);
+    });
+};
+
+document.body.appendChild(script);
+</script>
+{% endblock %}
