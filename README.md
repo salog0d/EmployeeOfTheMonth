@@ -165,64 +165,14 @@ class CustomUser(AbstractUser):
     last_active = models.DateTimeField(auto_now=True)
 ```
 
-### Achievement (Logros)
+### MiniGame
+
 ```python
-class Achievement(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-    points = models.IntegerField(default=0)
-    icon = models.ImageField(upload_to='achievements/')
-    criteria = models.JSONField()  # Criterios para desbloquear el logro
-    
-    class Meta:
-        ordering = ['-points']
+class Minigame(models.Model):
+    username = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    tries = models.IntegerField(default=0)
 ```
 
-### UserAchievement
-```python
-class UserAchievement(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
-    date_earned = models.DateTimeField(auto_now_add=True)
-    
-    class Meta:
-        unique_together = ['user', 'achievement']
-```
-
-### Task (Misiones)
-```python
-class Task(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.TextField()
-    points = models.IntegerField(default=0)
-    difficulty = models.CharField(max_length=20, choices=[
-        ('easy', 'Fácil'),
-        ('medium', 'Media'),
-        ('hard', 'Difícil')
-    ])
-    deadline = models.DateTimeField(null=True, blank=True)
-    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='created_tasks')
-    
-    class Meta:
-        ordering = ['-created_at']
-```
-
-### UserTask
-```python
-class UserTask(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    status = models.CharField(max_length=20, choices=[
-        ('pending', 'Pendiente'),
-        ('in_progress', 'En progreso'),
-        ('completed', 'Completada'),
-        ('failed', 'Fallida')
-    ], default='pending')
-    completed_at = models.DateTimeField(null=True, blank=True)
-    
-    class Meta:
-        unique_together = ['user', 'task']
-```
 
 ## API REST - Endpoints Principales
 
@@ -234,22 +184,9 @@ class UserTask(models.Model):
 ### Usuarios
 - `GET /api/v1/users/` - Listar usuarios
 - `GET /api/v1/users/{id}/` - Detalle de usuario
-- `GET /api/v1/users/me/` - Perfil del usuario actual
 - `PATCH /api/v1/users/{id}/` - Actualizar usuario
 - `GET /api/v1/users/leaderboard/` - Obtener tabla de clasificación
 
-### Logros
-- `GET /api/v1/achievements/` - Listar logros disponibles
-- `GET /api/v1/achievements/{id}/` - Detalle de logro
-- `GET /api/v1/users/{user_id}/achievements/` - Logros de un usuario
-
-### Tareas
-- `GET /api/v1/tasks/` - Listar tareas
-- `POST /api/v1/tasks/` - Crear nueva tarea
-- `GET /api/v1/tasks/{id}/` - Detalle de tarea
-- `PATCH /api/v1/tasks/{id}/` - Actualizar tarea
-- `POST /api/v1/tasks/{id}/assign/{user_id}/` - Asignar tarea a usuario
-- `POST /api/v1/users/tasks/{task_id}/complete/` - Marcar tarea como completada
 
 ## Instalación
 
