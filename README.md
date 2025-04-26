@@ -1,6 +1,7 @@
 # Employee Of The Month
 
-![Employee Of The Month Logo](static/images/logo.png)
+
+![Screenshot From 2025-04-26 13-37-42](https://github.com/user-attachments/assets/e2006005-32ef-4b7a-844f-ba0cd50b31ec)
 
 ## Descripción General
 
