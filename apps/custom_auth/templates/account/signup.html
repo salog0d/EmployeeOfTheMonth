@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Registrarse - EmployeeOfTheMonth{% endblock %}
+{% block title %}Sign Up - EmployeeOfTheMonth{% endblock %}
 
 {% block extra_head %}
 <style>
@@ -53,7 +53,7 @@
 <div class="auth-container flex items-center justify-center py-8">
     <div class="signup-card w-full max-w-md">
         <div class="glass-panel rounded-2xl overflow-hidden shadow-lg border border-white/5">
-            <!-- Header del formulario -->
+            <!-- Form header -->
             <div class="red-gradient p-6 flex flex-col items-center">
                 <div class="bg-white/10 p-3 rounded-full mb-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -63,11 +63,11 @@
                         <line x1="23" y1="11" x2="17" y2="11"></line>
                     </svg>
                 </div>
-                <h2 class="text-2xl font-bold text-white font-gaming tracking-wide">CREAR CUENTA</h2>
-                <p class="text-white/80 text-sm mt-1">Únete a la comunidad de EmployeeOfTheMonth</p>
+                <h2 class="text-2xl font-bold text-white font-gaming tracking-wide">CREATE ACCOUNT</h2>
+                <p class="text-white/80 text-sm mt-1">Join the EmployeeOfTheMonth community</p>
             </div>
             
-            <!-- Contenido del formulario -->
+            <!-- Form content -->
             <div class="bg-black/40 p-6">
                 {% if messages %}
                     {% for message in messages %}
@@ -90,7 +90,7 @@
                     
                     <div class="space-y-1">
                         <label for="id_username" class="block text-sm font-medium text-gray-200">
-                            Nombre de usuario
+                            Username
                         </label>
                         <div class="relative rounded-md input-focus-effect">
                             <div class="form-input-icon">
@@ -105,7 +105,7 @@
                                 type="text" 
                                 required 
                                 class="block w-full input-with-icon rounded-md border border-gray-700 bg-gray-900/70 text-white py-3 focus:outline-none focus:ring-0 text-sm"
-                                placeholder="Elige un nombre de usuario"
+                                placeholder="Choose a username"
                                 {% if form.username.value %}value="{{ form.username.value }}"{% endif %}
                             >
                             {% if form.username.errors %}
@@ -123,7 +123,7 @@
                     
                     <div class="space-y-1">
                         <label for="id_email" class="block text-sm font-medium text-gray-200">
-                            Correo electrónico
+                            Email
                         </label>
                         <div class="relative rounded-md input-focus-effect">
                             <div class="form-input-icon">
@@ -138,7 +138,7 @@
                                 type="email" 
                                 required 
                                 class="block w-full input-with-icon rounded-md border border-gray-700 bg-gray-900/70 text-white py-3 focus:outline-none focus:ring-0 text-sm"
-                                placeholder="tu@email.com"
+                                placeholder="your@email.com"
                                 {% if form.email.value %}value="{{ form.email.value }}"{% endif %}
                             >
                             {% if form.email.errors %}
@@ -156,7 +156,7 @@
                     
                     <div class="space-y-1">
                         <label for="id_password1" class="block text-sm font-medium text-gray-200">
-                            Contraseña
+                            Password
                         </label>
                         <div class="relative rounded-md input-focus-effect">
                             <div class="form-input-icon">
@@ -172,7 +172,7 @@
                                 required 
                                 onkeyup="checkPasswordStrength()"
                                 class="block w-full input-with-icon rounded-md border border-gray-700 bg-gray-900/70 text-white py-3 focus:outline-none focus:ring-0 text-sm"
-                                placeholder="Crea una contraseña segura"
+                                placeholder="Create a secure password"
                             >
                             <button 
                                 type="button" 
@@ -200,7 +200,7 @@
                             <p class="text-xs text-gray-400 mt-1">{{ form.password1.help_text }}</p>
                         {% endif %}
                         
-                        <!-- Indicador de fortaleza de contraseña -->
+                        <!-- Password strength indicator -->
                         <div class="mt-1 bg-gray-700 rounded-full overflow-hidden">
                             <div id="password-strength" class="password-strength bg-red-500 w-0"></div>
                         </div>
@@ -209,7 +209,7 @@
                     
                     <div class="space-y-1">
                         <label for="id_password2" class="block text-sm font-medium text-gray-200">
-                            Confirmar contraseña
+                            Confirm password
                         </label>
                         <div class="relative rounded-md input-focus-effect">
                             <div class="form-input-icon">
@@ -224,7 +224,7 @@
                                 required 
                                 onkeyup="checkPasswordMatch()"
                                 class="block w-full input-with-icon rounded-md border border-gray-700 bg-gray-900/70 text-white py-3 focus:outline-none focus:ring-0 text-sm"
-                                placeholder="Repite tu contraseña"
+                                placeholder="Repeat your password"
                             >
                             <button 
                                 type="button" 
@@ -248,7 +248,7 @@
                                 {% endfor %}
                             </ul>
                         {% endif %}
-                        <p id="password-match" class="text-xs mt-1 hidden text-game-red-400">Las contraseñas no coinciden</p>
+                        <p id="password-match" class="text-xs mt-1 hidden text-game-red-400">Passwords don't match</p>
                     </div>
                     
                    
@@ -258,7 +258,7 @@
                             id="submit-button"
                             class="w-full bg-game-red-600 py-3 px-4 rounded-md text-white font-medium hover:bg-game-red-700 focus:outline-none focus:ring-2 focus:ring-game-red-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-200 button-hover flex items-center justify-center"
                         >
-                            <span>CREAR CUENTA</span>
+                            <span>CREATE ACCOUNT</span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M5 12h14"></path>
                                 <path d="M12 5l7 7-7 7"></path>
@@ -269,9 +269,9 @@
                 
                 <div class="mt-6 text-center">
                     <p class="text-sm text-gray-400">
-                        ¿Ya tienes una cuenta? 
+                        Already have an account? 
                         <a href="{% url 'login' %}" class="text-game-red-400 hover:text-game-red-300 font-semibold">
-                            Inicia sesión
+                            Log in
                         </a>
                     </p>
                 </div>
@@ -283,7 +283,7 @@
 
 {% block extra_body %}
 <script>
-    // Función para alternar la visibilidad de la contraseña
+    // Function to toggle password visibility
     function togglePasswordVisibility(fieldId) {
         const passwordInput = document.getElementById('id_' + fieldId);
         const eyeIcon = document.getElementById(fieldId + '-eye-icon');
@@ -300,13 +300,13 @@
         }
     }
     
-    // Función para verificar la fortaleza de la contraseña
+    // Function to check password strength
     function checkPasswordStrength() {
         const password = document.getElementById('id_password1').value;
         const strengthBar = document.getElementById('password-strength');
         const strengthText = document.getElementById('password-strength-text');
         
-        // Criterios de fortaleza
+        // Strength criteria
         const hasLowerCase = /[a-z]/.test(password);
         const hasUpperCase = /[A-Z]/.test(password);
         const hasNumber = /[0-9]/.test(password);
@@ -320,7 +320,7 @@
         if (hasSpecialChar) strength += 1;
         if (isLongEnough) strength += 1;
         
-        // Actualizar barra y texto
+        // Update bar and text
         switch(strength) {
             case 0:
                 strengthBar.style.width = "0%";
@@ -330,31 +330,31 @@
             case 1:
                 strengthBar.style.width = "20%";
                 strengthBar.className = "password-strength bg-red-500 w-1/5";
-                strengthText.textContent = "Muy débil";
+                strengthText.textContent = "Very weak";
                 strengthText.className = "text-xs mt-1 text-red-500";
                 break;
             case 2:
                 strengthBar.style.width = "40%";
                 strengthBar.className = "password-strength bg-red-400 w-2/5";
-                strengthText.textContent = "Débil";
+                strengthText.textContent = "Weak";
                 strengthText.className = "text-xs mt-1 text-red-400";
                 break;
             case 3:
                 strengthBar.style.width = "60%";
                 strengthBar.className = "password-strength bg-yellow-500 w-3/5";
-                strengthText.textContent = "Media";
+                strengthText.textContent = "Medium";
                 strengthText.className = "text-xs mt-1 text-yellow-500";
                 break;
             case 4:
                 strengthBar.style.width = "80%";
                 strengthBar.className = "password-strength bg-green-400 w-4/5";
-                strengthText.textContent = "Fuerte";
+                strengthText.textContent = "Strong";
                 strengthText.className = "text-xs mt-1 text-green-400";
                 break;
             case 5:
                 strengthBar.style.width = "100%";
                 strengthBar.className = "password-strength bg-green-500 w-full";
-                strengthText.textContent = "Muy fuerte";
+                strengthText.textContent = "Very strong";
                 strengthText.className = "text-xs mt-1 text-green-500";
                 break;
         }
@@ -362,7 +362,7 @@
         checkPasswordMatch();
     }
     
-    // Función para comprobar si las contraseñas coinciden
+    // Function to check if passwords match
     function checkPasswordMatch() {
         const password = document.getElementById('id_password1').value;
         const confirmPassword = document.getElementById('id_password2').value;

@@ -73,16 +73,16 @@
 
 {% block content %}
 <div class="max-w-7xl mx-auto mt-8">
-    <!-- Panel de control principal -->
+    <!-- Main Dashboard -->
     <div class="glass-panel rounded-xl overflow-hidden shadow-lg border border-white/5">
         <div class="bg-black/50 px-6 py-4 border-b border-gray-800 flex justify-between items-center">
-            <span class="font-medium text-white text-lg font-gaming">PANEL DE CONTROL</span>
+            <span class="font-medium text-white text-lg font-gaming">DASHBOARD</span>
             <div class="flex space-x-2">
                 <a href="{% url 'play_game' %}" class="px-4 py-2 text-sm text-white bg-green-600 hover:bg-green-700 rounded-md transition-colors duration-200 font-medium flex items-center space-x-1">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polygon points="5 3 19 12 5 21 5 3"></polygon>
                     </svg>
-                    Jugar
+                    Play
                 </a>
                 <a href="{% url 'logout' %}" class="px-4 py-2 text-sm text-white bg-game-red-600 hover:bg-game-red-700 rounded-md transition-colors duration-200 font-medium flex items-center space-x-1">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -90,32 +90,32 @@
                         <polyline points="16 17 21 12 16 7"></polyline>
                         <line x1="21" y1="12" x2="9" y2="12"></line>
                     </svg>
-                    Cerrar sesión
+                    Log out
                 </a>
             </div>
         </div>
         
         <div class="p-6">
-            <!-- Información del usuario -->
+            <!-- User Information -->
             <div class="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-6">
                 <div class="h-20 w-20 rounded-full bg-gradient-to-br from-game-red-600 to-game-red-800 flex items-center justify-center text-3xl font-bold text-white">
                     {{ user.username|first|upper }}
                 </div>
                 <div>
-                    <h2 class="text-2xl font-semibold text-white">¡Bienvenido, <span class="text-game-red-500">{{ user.username }}</span>!</h2>
+                    <h2 class="text-2xl font-semibold text-white">Welcome, <span class="text-game-red-500">{{ user.username }}</span>!</h2>
                     <p class="text-gray-300 mt-2">Email: {{ user.email }}</p>
                     <div class="mt-1 flex items-center space-x-4">
-                        <span class="text-gray-400 text-sm">Nivel: <span class="text-white font-medium">5</span></span>
-                        <span class="text-gray-400 text-sm">Rango: <span class="text-white font-medium">#42</span></span>
-                        <span class="text-gray-400 text-sm">Última actividad: <span class="text-white font-medium">Hace 2 días</span></span>
+                        <span class="text-gray-400 text-sm">Level: <span class="text-white font-medium">5</span></span>
+                        <span class="text-gray-400 text-sm">Rank: <span class="text-white font-medium">#42</span></span>
+                        <span class="text-gray-400 text-sm">Last activity: <span class="text-white font-medium">2 days ago</span></span>
                     </div>
                 </div>
             </div>
             
-            <!-- Barra de progreso -->
+            <!-- Progress Bar -->
             <div class="mt-6">
                 <div class="flex justify-between text-sm mb-1">
-                    <span class="text-gray-300">Nivel 5</span>
+                    <span class="text-gray-300">Level 5</span>
                     <span class="text-gray-300">1250 / 2000 XP</span>
                 </div>
                 <div class="h-2 w-full bg-gray-700 rounded-full overflow-hidden">
@@ -123,7 +123,7 @@
                 </div>
             </div>
             
-            <!-- Estadísticas en grid -->
+            <!-- Statistics Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                 <div class="glass-panel stat-card rounded-xl p-6 text-center border border-white/5">
                     <div class="flex items-center justify-center mb-2">
@@ -134,7 +134,7 @@
                         </div>
                     </div>
                     <h3 class="text-3xl font-bold text-white">28</h3>
-                    <p class="text-gray-400 mt-2">Misiones completadas</p>
+                    <p class="text-gray-400 mt-2">Completed missions</p>
                 </div>
                 
                 <div class="glass-panel stat-card rounded-xl p-6 text-center border border-white/5">
@@ -146,7 +146,7 @@
                         </div>
                     </div>
                     <h3 class="text-3xl font-bold text-white">1250</h3>
-                    <p class="text-gray-400 mt-2">Puntos acumulados</p>
+                    <p class="text-gray-400 mt-2">Accumulated points</p>
                 </div>
                 
                 <div class="glass-panel stat-card rounded-xl p-6 text-center border border-white/5">
@@ -158,7 +158,7 @@
                         </div>
                     </div>
                     <h3 class="text-3xl font-bold text-white">7</h3>
-                    <p class="text-gray-400 mt-2">Logros desbloqueados</p>
+                    <p class="text-gray-400 mt-2">Achievements unlocked</p>
                 </div>
             </div>
         </div>
@@ -167,9 +167,9 @@
     <!-- Leaderboard -->
     <div class="mt-8">
         <div class="flex justify-between items-center mb-6">
-            <h3 class="text-xl font-bold text-white font-gaming">TABLA DE CLASIFICACIÓN</h3>
+            <h3 class="text-xl font-bold text-white font-gaming">LEADERBOARD</h3>
             <a href="#" class="text-game-red-400 hover:text-game-red-300 text-sm flex items-center">
-                Ver clasificación completa
+                View full leaderboard
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
@@ -177,16 +177,16 @@
         </div>
         
         <div class="glass-panel rounded-xl overflow-hidden border border-white/5 leaderboard-card">
-            <!-- Cabecera de la tabla -->
+            <!-- Table Header -->
             <div class="bg-black/50 border-b border-gray-800 px-6 py-3 grid grid-cols-12 gap-4">
                 <div class="col-span-1 text-gray-400 text-sm font-medium">#</div>
-                <div class="col-span-4 text-gray-400 text-sm font-medium">Jugador</div>
-                <div class="col-span-2 text-gray-400 text-sm font-medium text-center">Nivel</div>
-                <div class="col-span-3 text-gray-400 text-sm font-medium text-center">Puntos</div>
-                <div class="col-span-2 text-gray-400 text-sm font-medium text-center">Misiones</div>
+                <div class="col-span-4 text-gray-400 text-sm font-medium">Player</div>
+                <div class="col-span-2 text-gray-400 text-sm font-medium text-center">Level</div>
+                <div class="col-span-3 text-gray-400 text-sm font-medium text-center">Points</div>
+                <div class="col-span-2 text-gray-400 text-sm font-medium text-center">Missions</div>
             </div>
             
-            <!-- Filas de jugadores -->
+            <!-- Player Rows -->
             <div class="divide-y divide-gray-800">
                 <!-- Top 1 -->
                 <div class="px-6 py-4 grid grid-cols-12 gap-4 items-center top-player leaderboard-item bg-white/5">
@@ -200,7 +200,7 @@
                         <span class="font-medium text-white">MasterGamer</span>
                     </div>
                     <div class="col-span-2 text-center">
-                        <span class="bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded-full text-xs font-medium">Nivel 32</span>
+                        <span class="bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded-full text-xs font-medium">Level 32</span>
                     </div>
                     <div class="col-span-3 text-center">
                         <span class="text-white font-bold">8,745</span>
@@ -222,7 +222,7 @@
                         <span class="font-medium text-white">ShadowKiller</span>
                     </div>
                     <div class="col-span-2 text-center">
-                        <span class="bg-gray-500/20 text-gray-300 px-2 py-1 rounded-full text-xs font-medium">Nivel 29</span>
+                        <span class="bg-gray-500/20 text-gray-300 px-2 py-1 rounded-full text-xs font-medium">Level 29</span>
                     </div>
                     <div class="col-span-3 text-center">
                         <span class="text-white font-bold">7,920</span>
@@ -244,7 +244,7 @@
                         <span class="font-medium text-white">NinjaStrike</span>
                     </div>
                     <div class="col-span-2 text-center">
-                        <span class="bg-amber-500/20 text-amber-300 px-2 py-1 rounded-full text-xs font-medium">Nivel 27</span>
+                        <span class="bg-amber-500/20 text-amber-300 px-2 py-1 rounded-full text-xs font-medium">Level 27</span>
                     </div>
                     <div class="col-span-3 text-center">
                         <span class="text-white font-bold">6,834</span>
@@ -254,7 +254,7 @@
                     </div>
                 </div>
                 
-                <!-- Jugadores del 4 al 15 -->
+                <!-- Players 4 to 15 -->
                 {% for i in "45678901234"|make_list %}
                     <div class="px-6 py-3 grid grid-cols-12 gap-4 items-center leaderboard-item">
                         <div class="col-span-1">
@@ -264,10 +264,10 @@
                             <div class="h-8 w-8 rounded-full bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center text-xs font-medium text-white">
                                 {{ forloop.counter }}
                             </div>
-                            <span class="font-medium text-gray-300">Jugador{{ forloop.counter|add:3 }}</span>
+                            <span class="font-medium text-gray-300">Player{{ forloop.counter|add:3 }}</span>
                         </div>
                         <div class="col-span-2 text-center">
-                            <span class="bg-gray-700/40 text-gray-300 px-2 py-1 rounded-full text-xs">Nivel {{ forloop.counter|add:19 }}</span>
+                            <span class="bg-gray-700/40 text-gray-300 px-2 py-1 rounded-full text-xs">Level {{ forloop.counter|add:19 }}</span>
                         </div>
                         <div class="col-span-3 text-center">
                             <span class="text-gray-300 font-medium">{{ forloop.counter|add:3 }}{{ forloop.counter|add:7 }}{{ forloop.counter|add:5 }}0</span>
@@ -278,7 +278,7 @@
                     </div>
                 {% endfor %}
                 
-                <!-- Tu posición (destacada) -->
+                <!-- Your position (highlighted) -->
                 <div class="px-6 py-4 grid grid-cols-12 gap-4 items-center leaderboard-item bg-game-red-900/20 border-l-4 border-game-red-600">
                     <div class="col-span-1">
                         <div class="rank-badge bg-game-red-600 text-white">42</div>
@@ -288,10 +288,10 @@
                             {{ user.username|first|upper }}
                         </div>
                         <span class="font-medium text-white">{{ user.username }}</span>
-                        <span class="bg-game-red-600/20 text-game-red-300 px-2 py-0.5 rounded text-xs font-medium">Tú</span>
+                        <span class="bg-game-red-600/20 text-game-red-300 px-2 py-0.5 rounded text-xs font-medium">You</span>
                     </div>
                     <div class="col-span-2 text-center">
-                        <span class="bg-game-red-500/20 text-game-red-300 px-2 py-1 rounded-full text-xs font-medium">Nivel 5</span>
+                        <span class="bg-game-red-500/20 text-game-red-300 px-2 py-1 rounded-full text-xs font-medium">Level 5</span>
                     </div>
                     <div class="col-span-3 text-center">
                         <span class="text-white font-bold">1,250</span>

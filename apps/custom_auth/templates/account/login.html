@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Iniciar Sesión - EmployeeOfTheMonth{% endblock %}
+{% block title %}Login - EmployeeOfTheMonth{% endblock %}
 
 {% block extra_head %}
 <style>
@@ -48,7 +48,7 @@
 <div class="auth-container flex items-center justify-center py-12">
     <div class="login-card w-full max-w-md">
         <div class="glass-panel rounded-2xl overflow-hidden shadow-lg border border-white/5">
-            <!-- Header del formulario -->
+            <!-- Form header -->
             <div class="red-gradient p-6 flex flex-col items-center">
                 <div class="bg-white/10 p-3 rounded-full mb-3">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -57,11 +57,11 @@
                         <line x1="15" y1="12" x2="3" y2="12"></line>
                     </svg>
                 </div>
-                <h2 class="text-2xl font-bold text-white font-gaming tracking-wide">INICIAR SESIÓN</h2>
-                <p class="text-white/80 text-sm mt-1">Accede a tu cuenta de EmployeeOfTheMonth</p>
+                <h2 class="text-2xl font-bold text-white font-gaming tracking-wide">LOGIN</h2>
+                <p class="text-white/80 text-sm mt-1">Access your EmployeeOfTheMonth account</p>
             </div>
             
-            <!-- Contenido del formulario -->
+            <!-- Form content -->
             <div class="bg-black/40 p-6">
                 {% if messages %}
                     {% for message in messages %}
@@ -97,7 +97,7 @@
                                 type="text" 
                                 required 
                                 class="block w-full input-with-icon rounded-md border border-gray-700 bg-gray-900/70 text-white py-3 focus:outline-none focus:ring-0 text-sm"
-                                placeholder="Nombre de usuario o email"
+                                placeholder="Username or email"
                                 {% if form.username.value %}value="{{ form.username.value }}"{% endif %}
                             >
                             {% if form.username.errors %}
@@ -125,7 +125,7 @@
                                 type="password" 
                                 required 
                                 class="block w-full input-with-icon rounded-md border border-gray-700 bg-gray-900/70 text-white py-3 focus:outline-none focus:ring-0 text-sm"
-                                placeholder="Contraseña"
+                                placeholder="Password"
                             >
                             <button 
                                 type="button" 
@@ -159,7 +159,7 @@
                                 type="checkbox" 
                                 class="h-4 w-4 rounded border-gray-600 bg-gray-800 text-game-red-600 focus:ring-0 focus:ring-offset-0"
                             >
-                            <label for="remember-me" class="ml-2 block text-sm text-gray-300">Recordarme</label>
+                            <label for="remember-me" class="ml-2 block text-sm text-gray-300">Remember me</label>
                         </div>
                     </div>
                     
@@ -168,7 +168,7 @@
                             type="submit" 
                             class="w-full bg-game-red-600 py-3 px-4 rounded-md text-white font-medium hover:bg-game-red-700 focus:outline-none focus:ring-2 focus:ring-game-red-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition-all duration-200 button-hover flex items-center justify-center"
                         >
-                            <span>INICIAR SESIÓN</span>
+                            <span>LOGIN</span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="M5 12h14"></path>
                                 <path d="M12 5l7 7-7 7"></path>
@@ -179,9 +179,9 @@
                 
                 <div class="mt-6 text-center">
                     <p class="text-sm text-gray-400">
-                        ¿No tienes una cuenta? 
+                        Don't have an account? 
                         <a href="{% url 'signup' %}" class="text-game-red-400 hover:text-game-red-300 font-semibold">
-                            Regístrate ahora
+                            Sign up now
                         </a>
                     </p>
                 </div>

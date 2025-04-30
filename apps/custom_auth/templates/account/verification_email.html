@@ -3,82 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verifica tu cuenta - EmployeeOfTheMonth</title>
+    <title>Verify Your Account - EmployeeOfTheMonth</title>
     <style>
-        /* Estilos base */
+        /* Base styles */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
+            background-color: #121212;
+            color: #e0e0e0;
             line-height: 1.6;
         }
         
         .container {
             max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #ffffff;
+            margin: 20px auto;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
         }
         
         .header {
             text-align: center;
-            padding: 20px 0;
+            padding: 25px 0;
             background: linear-gradient(to right, #8B0000, #FF0000);
-            border-radius: 8px 8px 0 0;
+            position: relative;
         }
         
-        .header img {
-            max-height: 60px;
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, #FF0000, #8B0000);
         }
         
         .header h1 {
             color: white;
-            margin: 10px 0 0;
+            margin: 0;
             font-weight: bold;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            font-size: 28px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
+            margin: 5px 0 0;
+            font-size: 16px;
         }
         
         .content {
-            padding: 30px;
-            background-color: #fff;
-            border-left: 1px solid #ddd;
-            border-right: 1px solid #ddd;
-            color: #333;
+            padding: 35px;
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            border-left: 1px solid #333;
+            border-right: 1px solid #333;
         }
         
         .footer {
             text-align: center;
             padding: 20px;
             font-size: 12px;
-            color: #666;
-            background-color: #f9f9f9;
-            border-radius: 0 0 8px 8px;
-            border: 1px solid #ddd;
-            border-top: none;
+            color: #999;
+            background-color: #181818;
+            border-top: 1px solid #333;
         }
         
         .btn {
             display: inline-block;
-            padding: 12px 25px;
+            padding: 14px 30px;
             background: linear-gradient(to right, #8B0000, #FF0000);
             color: white;
             text-decoration: none;
             border-radius: 4px;
             font-weight: bold;
-            margin: 20px 0;
+            margin: 25px 0;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 16px;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         
         .btn:hover {
             background: linear-gradient(to right, #7a0000, #e00000);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
         }
         
         .divider {
-            border-top: 1px solid #eee;
-            margin: 20px 0;
+            border-top: 1px solid #333;
+            margin: 25px 0;
         }
         
         .text-center {
@@ -86,15 +107,38 @@
         }
         
         .text-muted {
-            color: #777;
+            color: #aaa;
             font-size: 14px;
         }
         
         .alternative-link {
             word-break: break-all;
-            color: #333;
+            color: #ccc;
             margin-top: 15px;
             font-size: 13px;
+        }
+        
+        .game-preview {
+            margin: 30px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        
+        .game-preview img {
+            width: 100%;
+            display: block;
+        }
+        
+        .highlight {
+            color: #FF4444;
+            font-weight: bold;
+        }
+        
+        .signature {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed #444;
         }
     </style>
 </head>
@@ -102,34 +146,40 @@
     <div class="container">
         <div class="header">
             <h1>EmployeeOfTheMonth</h1>
-            <p style="color: white; margin: 5px 0 0;">Plataforma de Videojuegos</p>
+            <p>Gaming Platform</p>
         </div>
         
         <div class="content">
-            <h2>¡Hola, {{ user.username }}!</h2>
+            <h2>Hello, <span class="highlight">{{ user.username }}</span>!</h2>
             
-            <p>Gracias por registrarte en <strong>EmployeeOfTheMonth</strong>. Para completar tu registro y comenzar a disfrutar de nuestros servicios, por favor verifica tu cuenta haciendo clic en el siguiente botón:</p>
+            <p>Thank you for registering with <strong>EmployeeOfTheMonth</strong>. To complete your registration and start enjoying our services, please verify your account by clicking the button below:</p>
             
             <div class="text-center">
-                <a href="http://{{ domain }}{% url 'verify_email' token=token %}" class="btn">VERIFICAR MI CUENTA</a>
+                <a href="http://{{ domain }}{% url 'verify_email' token=token %}" class="btn">Verify My Account</a>
             </div>
             
-            <p class="text-muted">Este enlace expirará en 24 horas.</p>
+            <p class="text-muted">This link will expire in 24 hours.</p>
             
             <div class="divider"></div>
             
+            <p>Get ready to compete, earn rewards, and climb the leaderboard! A world of challenges awaits you.</p>
             
+            <div class="game-preview">
+                <img src="{% static 'imgs/game2.png' %}"alt="EmployeeOfTheMonth Game Preview">
+            </div>
             
             <div class="divider"></div>
             
-            <p>Si no has solicitado esta cuenta, puedes ignorar este mensaje.</p>
+            <p>If you didn't request this account, you can safely ignore this message.</p>
             
-            <p>¡Gracias!<br>El equipo de EmployeeOfTheMonth</p>
+            <div class="signature">
+                <p>Thanks for joining us!<br><span class="highlight">The EmployeeOfTheMonth Team</span></p>
+            </div>
         </div>
         
         <div class="footer">
-            <p>&copy; {% now "Y" %} EmployeeOfTheMonth. Todos los derechos reservados.</p>
-            <p>Este es un correo automático, por favor no responda a este mensaje.</p>
+            <p>&copy; 2025 EmployeeOfTheMonth. All rights reserved.</p>
+            <p>This is an automated email. Please do not reply to this message.</p>
         </div>
     </div>
 </body>
