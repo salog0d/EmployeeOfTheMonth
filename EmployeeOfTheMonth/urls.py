@@ -16,10 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from apps.custom_auth.views import main as root
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('apps.custom_auth.urls')),  # Asegúrate de que este archivo existe
     path('game/', include('apps.game.urls')),
+    path('', root, name='root'),  # Redirige a la vista principal
+    
 ]
 

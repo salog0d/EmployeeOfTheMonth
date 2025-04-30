@@ -1,0 +1,978 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee of The Month - Gamificación Empresarial</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuración personalizada de Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'game-red': {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            200: '#fecaca',
+                            300: '#fca5a5',
+                            400: '#f87171',
+                            500: '#ef4444',
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                            900: '#7f1d1d',
+                        },
+                    },
+                    fontFamily: {
+                        gaming: ['Orbitron', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'red-glow': '0 0 15px rgba(239, 68, 68, 0.5)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS personalizado -->
+    <style>
+        body {
+            background: radial-gradient(circle at top right, #991b1b, #1a1a1a);
+            background-attachment: fixed;
+        }
+        
+        .glass-panel {
+            background-color: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .button-hover:hover {
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+            transform: translateY(-1px);
+            transition: all 0.2s ease;
+        }
+        
+        .red-gradient {
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #ef4444;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-item:hover::after {
+            width: 100%;
+        }
+        
+        .active-nav::after {
+            width: 100%;
+        }
+        
+        .hero-section {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .mission-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mission-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .mission-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+        }
+        
+        .member-card {
+            transition: all 0.3s ease;
+        }
+        
+        .member-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .faq-item {
+            transition: background-color 0.3s ease;
+        }
+        
+        .faq-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .tech-badge {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+        
+        .scroll-down {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+</head>
+<body class="text-white">
+    <header class="bg-black/80 border-b border-gray-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-3">
+                    <!-- Logo -->
+                    <div class="h-10 w-10 bg-gradient-to-br from-game-red-600 to-game-red-800 rounded-lg flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 11h4a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2z"></path>
+                            <path d="M14 11h4a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2z"></path>
+                            <path d="M6 22h4a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2z"></path>
+                            <path d="M14 22h4a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2z"></path>
+                        </svg>
+                    </div>
+                    <h1 class="text-xl md:text-2xl font-bold text-white font-gaming tracking-wider">EmployeeOf<span class="text-game-red-500">TheMonth</span></h1>
+                </div>
+                
+                <!-- Main Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#about" class="nav-item text-gray-300 hover:text-white transition duration-200">About</a>
+                    <a href="#features" class="nav-item text-gray-300 hover:text-white transition duration-200">Features</a>
+                    <a href="#missions" class="nav-item text-gray-300 hover:text-white transition duration-200">Missions</a>
+                    <a href="#team" class="nav-item text-gray-300 hover:text-white transition duration-200">Team</a>
+                    <a href="#faq" class="nav-item text-gray-300 hover:text-white transition duration-200">FAQ</a>
+                </nav>
+                
+                <!-- Action Buttons -->
+                <div class="flex items-center space-x-4">
+                    <a href="/auth/login/" class="px-4 py-2 text-sm text-white border border-white/20 rounded-md hover:bg-white/10 transition-colors duration-200">Log In</a>
+                    <a href="/auth/signup/" class="px-4 py-2 text-sm text-white bg-game-red-600 hover:bg-game-red-700 rounded-md transition-colors duration-200 button-hover">Sign Up</a>
+                    <!-- Mobile Menu Button -->
+                    <button id="mobileMenuButton" class="md:hidden text-gray-300 focus:outline-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu (hidden by default) -->
+            <div id="mobileMenu" class="hidden md:hidden py-2 border-t border-gray-800">
+                <a href="#about" class="block py-2 px-4 text-gray-300 hover:bg-gray-800">About</a>
+                <a href="#features" class="block py-2 px-4 text-gray-300 hover:bg-gray-800">Features</a>
+                <a href="#missions" class="block py-2 px-4 text-gray-300 hover:bg-gray-800">Missions</a>
+                <a href="#team" class="block py-2 px-4 text-gray-300 hover:bg-gray-800">Team</a>
+                <a href="#faq" class="block py-2 px-4 text-gray-300 hover:bg-gray-800">FAQ</a>
+            </div>
+        </div>
+    </header>
+    
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold font-gaming text-white leading-tight">
+                    Transform <br><span class="text-game-red-500">work performance</span><br> into an adventure
+                </h1>
+                <p class="text-xl text-gray-300">
+                    Employee of The Month is a gamified platform that turns performance management into an epic and interactive experience.
+                </p>
+                <div class="flex space-x-4 pt-4">
+                    <a href="/auth/signup/" class="px-8 py-3 text-white bg-game-red-600 hover:bg-game-red-700 rounded-md font-medium transition-colors duration-200 button-hover">Start your adventure</a>
+                    <a href="#about" class="px-8 py-3 text-white border border-white/20 rounded-md hover:bg-white/10 transition-colors duration-200">Learn more</a>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="glass-panel rounded-2xl overflow-hidden border border-white/5 shadow-lg">
+                    <img src="{% static 'imgs/game1.png' %}" alt="Employee of The Month screenshot" class="w-full h-auto rounded-2xl">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-2xl"></div>
+                    <div class="absolute bottom-6 left-6 right-6">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-game-red-600 to-game-red-800 flex items-center justify-center">
+                                <span class="text-xl font-bold">1</span>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold">Earn points</h3>
+                                <p class="text-white/70">Complete challenges and climb the leaderboard</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute -bottom-10 -right-10 z-[-1]">
+                    <div class="w-64 h-64 bg-game-red-600/20 rounded-full blur-3xl"></div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center">
+            <div class="scroll-down">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+            </div>
+        </div>
+    </div>
+</section>
+
+        
+<!-- About Section -->
+<section id="about" class="py-24 bg-black/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold font-gaming mb-4">OUR <span class="text-game-red-500">HISTORY</span></h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">Discover how Employee of The Month was born and its mission to revolutionize the workplace</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <div>
+                <div class="glass-panel rounded-2xl overflow-hidden border border-white/5 shadow-lg p-1">
+                    <div class="aspect-video rounded-xl overflow-hidden">
+                        <img src="{% static 'imgs/game2.png' %}" alt="Employee of The Month concept" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+            <div class="space-y-6">
+                <h3 class="text-2xl font-bold font-gaming">The origin of the project</h3>
+                <p class="text-gray-300">
+                    Employee of The Month was born as an innovative response to the challenges of motivation and recognition in business environments. Inspired by Rockwell Automation, our training partner, we decided to combine gamification principles with business tools to create a platform that transforms the work experience.
+                </p>
+                <p class="text-gray-300">
+                    With the mindset of "learning through play", we developed an ecosystem that promotes both professional growth and entertainment, proving that productivity and fun can coexist in perfect harmony.
+                </p>
+                <h4 class="text-xl font-bold mt-8 mb-4">Technologies used</h4>
+                <div>
+                    <span class="tech-badge">Django 5.2</span>
+                    <span class="tech-badge">Django REST Framework</span>
+                    <span class="tech-badge">Unity Engine</span>
+                    <span class="tech-badge">PostgreSQL</span>
+                    <span class="tech-badge">TailwindCSS</span>
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">Docker</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-24">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold font-gaming mb-4">ROCKWELL <span class="text-game-red-500">AUTOMATION</span></h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">Our training partner and inspiration behind the project</p>
+            </div>
+            
+            <div class="glass-panel rounded-2xl overflow-hidden border border-white/5 shadow-lg p-8">
+                <div class="flex flex-col md:flex-row md:items-center gap-8">
+                    <div class="md:w-1/4 flex justify-center">
+                        <div class="w-56 h-56 p-4  rounded-xl">
+                            <img src="{% static 'imgs/rockwell_automation_logo.jpeg' %}" alt="Rockwell Automation logo" class="w-full h-full object-contain">
+                        </div>
+                    </div>
+                    <div class="md:w-3/4 space-y-4">
+                        <h3 class="text-2xl font-bold">Rockwell Automation</h3>
+                        <p class="text-gray-300">
+                            Rockwell Automation, Inc. is a global leader in industrial automation and digital transformation. Headquartered in Milwaukee, Wisconsin, it provides industrial automation and information solutions that help its clients be more productive and sustainable.
+                        </p>
+                        <p class="text-gray-300">
+                            As the training partner of the Employee of The Month project, Rockwell Automation inspired us with its culture of innovation and operational excellence. Its focus on continuous improvement and talent development was key to creating a platform that truly drives employee performance and engagement.
+                        </p>
+                        <p class="text-gray-300">
+                            The collaboration with Rockwell Automation allowed us to understand the real needs of modern companies and design a solution that combines cutting-edge technology with effective management methodologies.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+        
+<!-- Features Section -->
+<section id="features" class="py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold font-gaming mb-4">MAIN <span class="text-game-red-500">FEATURES</span></h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">Discover how our platform revolutionizes performance management</p>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg p-6 feature-card">
+                <div class="w-16 h-16 rounded-lg bg-game-red-600/20 flex items-center justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-game-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Scoring System</h3>
+                <p class="text-gray-300">
+                    Employees accumulate points by completing tasks, achieving goals, and receiving recognition. Their progress is displayed in real time on their profile.
+                </p>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg p-6 feature-card">
+                <div class="w-16 h-16 rounded-lg bg-game-red-600/20 flex items-center justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-game-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Achievements and Badges</h3>
+                <p class="text-gray-300">
+                    A virtual reward system for specific milestones or desired behaviors, creating a sense of pride and recognition.
+                </p>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg p-6 feature-card">
+                <div class="w-16 h-16 rounded-lg bg-game-red-600/20 flex items-center justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-game-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Leaderboard</h3>
+                <p class="text-gray-300">
+                    Real-time leaderboard showing top-performing employees, encouraging healthy and motivating competition.
+                </p>
+            </div>
+            
+            <!-- Feature 4 -->
+            <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg p-6 feature-card">
+                <div class="w-16 h-16 rounded-lg bg-game-red-600/20 flex items-center justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-game-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Interactive Minigames</h3>
+                <p class="text-gray-300">
+                    Developed with Unity, these games allow employees to earn extra points and have fun during their breaks.
+                </p>
+            </div>
+            
+            <!-- Feature 5 -->
+            <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg p-6 feature-card">
+                <div class="w-16 h-16 rounded-lg bg-game-red-600/20 flex items-center justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-game-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Personalized Dashboard</h3>
+                <p class="text-gray-300">
+                    Main interface with relevant statistics for each user, showing their progress, achievements, and ranking position.
+                </p>
+            </div>
+            
+            <!-- Feature 6 -->
+            <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg p-6 feature-card">
+                <div class="w-16 h-16 rounded-lg bg-game-red-600/20 flex items-center justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-game-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3">RESTful API</h3>
+                <p class="text-gray-300">
+                    Built with Django REST Framework, it allows integration with other enterprise systems and mobile applications.
+                </p>
+            </div>
+        </div>
+        
+        <div class="mt-16 text-center">
+            <a href="/auth/signup/" class="px-8 py-3 text-white bg-game-red-600 hover:bg-game-red-700 rounded-md font-medium transition-colors duration-200 button-hover inline-flex items-center">
+                <span>Start playing now</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+        <!-- Misiones Section -->
+        <section id="missions" class="py-24 bg-black/30">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold font-gaming mb-4">MISIONES <span class="text-game-red-500">PRINCIPALES</span></h2>
+                    <p class="text-xl text-gray-300 max-w-3xl mx-auto">Explora los desafíos que te esperan en Employee of The Month</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Misión 1 -->
+                    <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg p-6 mission-card">
+                        <div class="w-16 h-16 mb-6 flex items-center justify-center">
+                            <div class="w-full h-full rounded-full bg-gradient-to-br from-yellow-500 to-yellow-600 flex items-center justify-center text-2xl font-bold">
+                                1
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">La Conquista del Conocimiento</h3>
+                        <p class="text-gray-300 mb-4">
+                            Embárcate en un viaje para dominar nuevas habilidades y conocimientos que impulsarán tu carrera profesional.
+                        </p>
+                        <div class="space-y-3 mt-6">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-game-red-500 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-300">Completa cursos de capacitación</span>
+                            </div>
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-game-red-500 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-300">Participa en webinars formativos</span>
+                            </div>
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-game-red-500 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-300">Obtén certificaciones profesionales</span>
+                            </div>
+                        </div>
+                        <div class="mt-8">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-400">Recompensa:</span>
+                                <span class="text-sm font-medium text-yellow-500">500 puntos + Medalla de Sabiduría</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Misión 2 -->
+                    <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg p-6 mission-card">
+                        <div class="w-16 h-16 mb-6 flex items-center justify-center">
+                            <div class="w-full h-full rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-2xl font-bold">
+                                2
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">El Desafío de la Innovación</h3>
+                        <p class="text-gray-300 mb-4">
+                            Desarrolla soluciones creativas a problemas existentes y propón ideas que mejoren los procesos de la empresa.
+                        </p>
+                        <div class="space-y-3 mt-6">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-game-red-500 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-300">Propón mejoras a procesos existentes</span>
+                            </div>
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-game-red-500 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-300">Participa en sesiones de brainstorming</span>
+                            </div>
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-game-red-500 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-300">Desarrolla prototipos o conceptos</span>
+                            </div>
+                        </div>
+                        <div class="mt-8">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-400">Recompensa:</span>
+                                <span class="text-sm font-medium text-blue-500">750 puntos + Insignia de Innovador</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Misión 3 -->
+                    <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg p-6 mission-card">
+                        <div class="w-16 h-16 mb-6 flex items-center justify-center">
+                            <div class="w-full h-full rounded-full bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center text-2xl font-bold">
+                                3
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">La Épica del Trabajo en Equipo</h3>
+                        <p class="text-gray-300 mb-4">
+                            Demuestra tus habilidades de colaboración y liderazgo ayudando a tu equipo a alcanzar objetivos colectivos.
+                        </p>
+                        <div class="space-y-3 mt-6">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-game-red-500 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-300">Lidera proyectos colaborativos</span>
+                            </div>
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-game-red-500 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-300">Apoya a nuevos miembros del equipo</span>
+                            </div>
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-game-red-500 mr-3" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                                <span class="text-gray-300">Contribuye a los objetivos departamentales</span>
+                            </div>
+                        </div>
+                        <div class="mt-8">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-400">Recompensa:</span>
+                                <span class="text-sm font-medium text-green-500">1000 puntos + Trofeo de Liderazgo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-16 text-center glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg p-8">
+                    <h3 class="text-2xl font-bold mb-4">¿Listo para aceptar estos desafíos?</h3>
+                    <p class="text-gray-300 mb-6 max-w-2xl mx-auto">
+                        Cada misión te acercará más a convertirte en el Employee of The Month, con recompensas exclusivas y reconocimiento en toda la organización.
+                    </p>
+                    <a href="/auth/signup/" class="px-8 py-3 text-white bg-game-red-600 hover:bg-game-red-700 rounded-md font-medium transition-colors duration-200 button-hover inline-flex items-center">
+                        <span>Acepta las misiones</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Team Section -->
+<section id="team" class="py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold font-gaming mb-4">OUR <span class="text-game-red-500">TEAM</span></h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">Meet the developers behind Employee of The Month</p>
+        </div>
+        
+        
+    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr">
+            <!-- Member 1 -->
+            <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg member-card">
+                <div class="p-1">
+                    <div class="aspect-square overflow-hidden rounded-lg">
+                        <img src="{% static 'imgs/salomon2.jpeg' %}" alt="Team member" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="p-6 text-center">
+                    <h3 class="text-xl font-bold">David Salomon Nava</h3>
+                    <p class="text-game-red-400 mb-3">Full Stack Python Developer</p>
+                    <p class="text-gray-300 text-sm mb-4">
+                        Experience with MVC architecture using Django and Django Rest Framework. HTML/CSS/JavaScript 
+                    </p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="https://github.com/salog0d" class="text-gray-400 hover:text-white transition-colors duration-200" target="_blank" rel="noopener noreferrer">
+                            <!-- GitHub Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 0.297c-6.63 0-12 5.373-12 12 0 5.302 
+                                         3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 
+                                         0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61 
+                                         -.546-1.385-1.333-1.754-1.333-1.754-1.087-.744.084-.729.084-.729 
+                                         1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.304 
+                                         3.495.997.108-.776.418-1.305.762-1.605-2.665-.3-5.467-1.332-5.467-5.93 
+                                         0-1.31.468-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 
+                                         0 0 1.005-.322 3.3 1.23a11.5 11.5 0 0 1 3-.405c1.02.005 2.045.138 
+                                         3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176 
+                                         .765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92 
+                                         .435.375.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 
+                                         0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297 
+                                         c0-6.627-5.373-12-12-12"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.linkedin.com/in/salodev" class="text-gray-400 hover:text-white transition-colors duration-200" target="_blank" rel="noopener noreferrer">
+                            <!-- LinkedIn Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5
+                                         c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 
+                                         0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 
+                                         6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"/>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <!-- Member 2 -->
+            <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg member-card">
+                <div class="p-1">
+                    <div class="aspect-square overflow-hidden rounded-lg">
+                        <img src="{% static 'imgs/marcelo.png' %}" alt="Team member" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="p-6 text-center">
+                    <h3 class="text-xl font-bold">Marcelo Peña</h3>
+                    <p class="text-game-red-400 mb-3">Full Stack Unity Developer</p>
+                    <p class="text-gray-300 text-sm mb-4">
+                        Experience in gamification, game development, and design.
+                    </p>
+                    <div class="flex justify-center space-x-4">
+                      
+                        <a href="https://www.linkedin.com/in/marcelo-alfonso-pe%C3%B1a-era%C3%B1a-828107363/" class="text-gray-400 hover:text-white transition-colors duration-200" target="_blank" rel="noopener noreferrer">
+                            <!-- LinkedIn Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5
+                                         c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 
+                                         0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 
+                                         6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Member 3 -->
+            <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg member-card">
+                <div class="p-1">
+                    <div class="aspect-square overflow-hidden rounded-lg">
+                        <img src="{% static 'imgs/roro.jpeg' %}" alt="Team member" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="p-6 text-center">
+                    <h3 class="text-xl font-bold">Heriberto Hiram Sáenz Vázquez</h3>
+                    <p class="text-game-red-400 mb-3">DB Developer</p>
+                    <p class="text-gray-300 text-sm mb-4">
+                        Designer database and implemented triggers and stored procedures, and project documentation.
+                    </p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
+                            <!-- GitHub Icon -->
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
+                            <!-- LinkedIn Icon -->
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Member 4 -->
+            <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg member-card">
+                <div class="p-1">
+                    <div class="aspect-square overflow-hidden rounded-lg">
+                        <img src="{% static 'imgs/gaitan.jpeg' %}" alt="Team member" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="p-6 text-center">
+                    <h3 class="text-xl font-bold">Diego Gaitán Sánchez</h3>
+                    <p class="text-game-red-400 mb-3">PM/Scrum Master</p>
+                    <p class="text-gray-300 text-sm mb-4">
+                        Managed project development and implemented Agile methodologies. Also participated in documenting the system.
+                    </p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
+                            <!-- GitHub Icon -->
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
+                            <!-- LinkedIn Icon -->
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Member 5-->
+            <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg member-card">
+                <div class="p-1">
+                    <div class="aspect-square overflow-hidden rounded-lg">
+                        <img src="{% static 'imgs/ror.jpeg' %}" alt="Team member" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="p-6 text-center">
+                    <h3 class="text-xl font-bold">Rodrigo González de la Garza </h3>
+                    <p class="text-game-red-400 mb-3">PM/Scrum Master</p>
+                    <p class="text-gray-300 text-sm mb-4">
+                        Managed project development and implemented Agile methodologies. Also participated in documenting the system.
+                    </p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
+                            <!-- GitHub Icon -->
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
+                            <!-- LinkedIn Icon -->
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+        
+
+<!-- FAQ Section -->
+<section id="faq" class="py-24 bg-black/30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold font-gaming mb-4">FREQUENTLY <span class="text-game-red-500">ASKED QUESTIONS</span></h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">Answers to the most common questions about Employee of The Month</p>
+        </div>
+        
+        <div class="max-w-4xl mx-auto space-y-6">
+            <!-- FAQ Item 1 -->
+            <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg faq-item">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-3 text-white">What exactly is Employee of The Month?</h3>
+                    <p class="text-gray-300">
+                        Employee of The Month is a gamified platform for corporate environments that transforms employee performance management into an interactive and motivating experience. It combines video game elements with productivity tools to foster recognition, healthy competition, and professional development.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- FAQ Item 2 -->
+            <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg faq-item">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-3 text-white">How does the scoring system work?</h3>
+                    <p class="text-gray-300">
+                        Users earn points through various activities, such as completing assigned tasks, participating in training, contributing to projects, receiving peer recognition, and playing mini-games within the platform. These points determine your level and ranking on the leaderboard.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- FAQ Item 3 -->
+            <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg faq-item">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-3 text-white">What technologies were used to develop the platform?</h3>
+                    <p class="text-gray-300">
+                        The platform is primarily built with Django and Django REST Framework for the backend, providing a robust and secure API. Mini-games are developed with Unity, allowing for high-quality interactive experiences. The frontend uses TailwindCSS and JavaScript to create a modern and responsive interface.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- FAQ Item 4 -->
+            <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg faq-item">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-3 text-white">How does it integrate with other enterprise systems?</h3>
+                    <p class="text-gray-300">
+                        Employee of The Month offers a full RESTful API that enables integration with various enterprise systems such as CRM, ERP, project management systems, and HR platforms. This allows for synchronization of performance data, goals, and achievements from different tools used in the organization.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- FAQ Item 5 -->
+            <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg faq-item">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-3 text-white">What advantages does it offer over traditional systems?</h3>
+                    <p class="text-gray-300">
+                        Unlike traditional performance management systems, Employee of The Month leverages gamification to boost employee motivation and engagement. Studies show this approach can increase productivity by up to 40%, reduce employee turnover, and significantly improve job satisfaction.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- FAQ Item 6 -->
+            <div class="glass-panel rounded-xl overflow-hidden border border-white/5 shadow-lg faq-item">
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-3 text-white">How can I implement this platform in my company?</h3>
+                    <p class="text-gray-300">
+                        Implementation is simple and scalable. We offer both cloud and on-premise deployment options, with a guided onboarding process by our team. The platform adapts to companies of any size, from startups to large corporations, and can be customized to meet the specific needs of each organization.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+        
+        <!-- CTA Section -->
+     <!-- CTA Section -->
+<section class="py-24 relative">
+    <div class="absolute inset-0 bg-game-red-900/20 z-[-1]"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="glass-panel rounded-2xl overflow-hidden border border-white/5 shadow-lg p-8 md:p-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold font-gaming mb-6 leading-tight">
+                        READY TO <span class="text-game-red-500">REVOLUTIONIZE</span> YOUR WORK ENVIRONMENT?
+                    </h2>
+                    <p class="text-xl text-gray-300 mb-8">
+                        Start today and turn performance management into an epic adventure. Join Employee of The Month and discover the power of gamification.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="/auth/signup/" class="px-8 py-4 text-white bg-game-red-600 hover:bg-game-red-700 rounded-md font-medium transition-colors duration-200 button-hover text-center">
+                            Create an account
+                        </a>
+                        <a href="/auth/login/" class="px-8 py-4 text-white border border-white/20 rounded-md hover:bg-white/10 transition-colors duration-200 text-center">
+                            Sign in
+                        </a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="aspect-video rounded-xl overflow-hidden">
+                        <img src="{% static 'imgs/dashboard.png' %}" alt="Employee of The Month dashboard" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute -bottom-4 -right-4">
+                        <div class="bg-game-red-600 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">
+                            Join now!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    </main>
+    
+    <footer class="bg-black/80 border-t border-gray-800 mt-auto">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center space-x-3 mb-6">
+                        <div class="h-10 w-10 bg-gradient-to-br from-game-red-600 to-game-red-800 rounded-lg flex items-center justify-center">
+                            <!-- SVG Icon -->
+                        </div>
+                        <h3 class="text-xl font-bold text-white font-gaming tracking-wider">EmployeeOf<span class="text-game-red-500">TheMonth</span></h3>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        Transforming performance management into an epic adventure through gamification.
+                    </p>
+                </div>
+    
+                <div>
+                    <h3 class="text-white font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors duration-200">About</a></li>
+                        <li><a href="#features" class="text-gray-400 hover:text-white transition-colors duration-200">Features</a></li>
+                        <li><a href="#missions" class="text-gray-400 hover:text-white transition-colors duration-200">Missions</a></li>
+                        <li><a href="#team" class="text-gray-400 hover:text-white transition-colors duration-200">Team</a></li>
+                        <li><a href="#faq" class="text-gray-400 hover:text-white transition-colors duration-200">FAQ</a></li>
+                    </ul>
+                </div>
+    
+                <div>
+                    <h3 class="text-white font-bold mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">Terms of Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">Cookies</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">Licenses</a></li>
+                    </ul>
+                </div>
+    
+                <div>
+                    <h3 class="text-white font-bold mb-4">Contact</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <!-- Mail Icon -->
+                            <span class="text-gray-400">info@employeeofthemonth.com</span>
+                        </li>
+                        <li class="flex items-center">
+                            <!-- Location Icon -->
+                            <span class="text-gray-400">Monterrey, Mexico</span>
+                        </li>
+                        <li class="flex items-center">
+                            <!-- Phone Icon -->
+                            <span class="text-gray-400">+52 33 12 38 26 51</span>
+                        </li>
+                    </ul>
+                    <div class="mt-6 flex space-x-4">
+                        <!-- Social Icons -->
+                    </div>
+                </div>
+            </div>
+    
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm">
+                    © 2025 Employee of The Month. All rights reserved.
+                </p>
+                <p class="text-gray-500 text-sm mt-4 md:mt-0">
+                    Developed with <span class="text-game-red-500">❤</span> by the EmployeeOfTheMonth team
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    
+    <script>
+        // Script para el menú desplegable del usuario
+        const userMenuButton = document.getElementById('userMenuButton');
+        const userMenu = document.getElementById('userMenu');
+        
+        if (userMenuButton && userMenu) {
+            userMenuButton.addEventListener('click', () => {
+                userMenu.classList.toggle('hidden');
+            });
+            
+            // Cerrar al hacer clic fuera
+            document.addEventListener('click', (event) => {
+                if (!userMenuButton.contains(event.target) && !userMenu.contains(event.target)) {
+                    userMenu.classList.add('hidden');
+                }
+            });
+        }
+        
+        // Script para el menú móvil
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+        
+        // Script para suavizar el desplazamiento a las secciones
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80, // Ajustar por la altura del header
+                        behavior: 'smooth'
+                    });
+                    
+                    // Cerrar el menú móvil si está abierto
+                    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

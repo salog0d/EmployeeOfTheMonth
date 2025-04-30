@@ -1,3 +1,5 @@
+from unittest import loader
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
@@ -94,3 +96,6 @@ def logout_view(request):
 @login_required
 def dashboard_view(request):
     return render(request, 'account/dashboard.html')
+
+def main(request):
+    return render(request, 'index.html')

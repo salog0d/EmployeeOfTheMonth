@@ -8,7 +8,7 @@ db.sqlite3
 db.sqlite3-journal
 media
 cert/ca.pem
-
+./cert
 # Si quieres ignorar settings.py completamente
 EmployeeOfTHeMonth/settings.py
 # O alternativamente, una mejor práctica es tener diferentes settings:
