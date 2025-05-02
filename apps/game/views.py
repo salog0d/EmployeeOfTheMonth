@@ -1,9 +1,7 @@
 from django.shortcuts import render
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import CustomUser
 from django.contrib.auth.decorators import login_required
 
 
@@ -13,12 +11,10 @@ def game_view(request):
     context = {
         'user_id': user.id,
         'username': user.username,
-        # No incluyas información sensible como tokens JWT aquí
     }
     return render(request, 'game.html', context)
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
 def add_experience(request):
     try:
         user = request.user
@@ -27,26 +23,25 @@ def add_experience(request):
         if amount <= 0:
             return Response({'error': 'Amount must be positive.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        if amount >= user.experience:
-            user.experience = amount
+        if amount >= user.score:
+            user.score = amount
             user.save()
-            return Response({'message': 'Experience updated.', 'new_experience': user.experience})
+            return Response({'message': 'Experience updated.', 'new_experience': user.score})
         else:  
-            return Response({'message': 'Experience maintained.', 'new_experience': user.experience})
+            return Response({'message': 'Experience maintained.', 'new_experience': user.score})
     
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def get_user(request):
     try:
         user = request.user
         return Response({
             'email': user.email,
             'username': user.username,
-            'experience': user.experience,
-            'time_played': user.time_played,
+            'experience': user.score,
+            
         }, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
