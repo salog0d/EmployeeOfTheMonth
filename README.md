@@ -238,26 +238,6 @@ class Minigame(models.Model):
    python manage.py runserver
    ```
 
-### Configuración con Docker
-
-1. Construir y levantar los contenedores:
-   ```bash
-   docker-compose up -d --build
-   ```
-
-2. Aplicar migraciones:
-   ```bash
-   docker-compose exec web python manage.py migrate
-   ```
-
-3. Crear un superusuario:
-   ```bash
-   docker-compose exec web python manage.py createsuperuser
-   ```
-
-4. Acceder a la aplicación en `http://localhost:8000`
-
-## Despliegue en producción
 
 ### Preparación
 
